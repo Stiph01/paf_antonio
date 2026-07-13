@@ -13,9 +13,13 @@ export default function EventCard({ event, onEdit, onDelete, onInscribe, onViewI
 
   // Formatear fecha legible
   const formatDate = (dateStr) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    // Ajustar por zona horaria local
-    const date = new Date(dateStr + "T00:00:00");
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    const date = new Date(dateStr);
     return date.toLocaleDateString("es-ES", options);
   };
 
