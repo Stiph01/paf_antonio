@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Trash2, Search, UserPlus } from "lucide-react";
+import { User, Trash2, Search, UserPlus, Edit } from "lucide-react";
 
 export default function ParticipantList({
   participants,
@@ -7,6 +7,7 @@ export default function ParticipantList({
   onSearchChange,
   onAddClick,
   onDeleteParticipant,
+  onEditParticipant,
 }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
@@ -67,13 +68,22 @@ export default function ParticipantList({
                     <strong>{p.total_eventos || 0}</strong> eventos
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => onDeleteParticipant(p.id)}
-                      title="Eliminar participante"
-                    >
-                      <Trash2 size={14} />
-                    </button>
+                    <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
+                      <button
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => onEditParticipant(p)}
+                        title="Editar participante"
+                      >
+                        <Edit size={14} />
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => onDeleteParticipant(p.id)}
+                        title="Eliminar participante"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

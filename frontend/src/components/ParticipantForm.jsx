@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
-export default function ParticipantForm({ onSave, onClose }) {
+export default function ParticipantForm({ participant, onSave, onClose }) {
   const [formData, setFormData] = useState({
     nombre: "",
     correo: "",
@@ -10,6 +10,17 @@ export default function ParticipantForm({ onSave, onClose }) {
   });
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (participant) {
+      setFormData({
+        nombre: participant.nombre || "",
+        correo: participant.correo || "",
+        rol: participant.rol || "Estudiante",
+        codigo: participant.codigo || "",
+      });
+    }
+  }, [participant]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,7 +61,7 @@ export default function ParticipantForm({ onSave, onClose }) {
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="modal-header">
-          <h2>Registrar Nuevo Participante</h2>
+          <h2>{participant ? "Editar Participante" : "Registrar Nuevo Participante"}</h2>
           <button className="modal-close-btn" onClick={onClose} aria-label="Cerrar">
             <X size={20} />
           </button>
@@ -119,7 +130,7 @@ export default function ParticipantForm({ onSave, onClose }) {
               Cancelar
             </button>
             <button type="submit" className="btn btn-primary">
-              Registrar Participante
+              {participant ? "Guardar Cambios" : "Registrar Participante"}
             </button>
           </div>
         </form>

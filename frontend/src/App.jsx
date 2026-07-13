@@ -32,6 +32,7 @@ export default function App() {
   const [showEventForm, setShowEventForm] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
   const [showParticipantForm, setShowParticipantForm] = useState(false);
+  const [editingParticipant, setEditingParticipant] = useState(null);
   const [inscribingEvent, setInscribingEvent] = useState(null);
   const [viewingInscribedEvent, setViewingInscribedEvent] = useState(null);
 
@@ -115,13 +116,19 @@ export default function App() {
   // --- Operaciones de Participantes ---
   const handleSaveParticipant = async (participantData) => {
     try {
-      await api.createParticipant(participantData);
-      showToast("success", "Participante Registrado", "El participante ha sido registrado en el sistema universitario.");
+      if (editingParticipant) {
+        await api.updateParticipant(editingParticipant.id, participantData);
+        showToast("success", "Participante Actualizado", "Los datos del participante han sido actualizados correctamente.");
+      } else {
+        await api.createParticipant(participantData);
+        showToast("success", "Participante Registrado", "El participante ha sido registrado en el sistema universitario.");
+      }
       setShowParticipantForm(false);
+      setEditingParticipant(null);
       loadData();
     } catch (err) {
       console.error(err);
-      showToast("danger", "Error de Registro", err.message || "El correo o código ya se encuentran registrados.");
+      showToast("danger", "Error", err.message || "El correo o código ya se encuentran registrados.");
     }
   };
 
@@ -308,8 +315,15 @@ export default function App() {
             participants={filteredParticipants}
             searchQuery={participantSearchQuery}
             onSearchChange={setParticipantSearchQuery}
-            onAddClick={() => setShowParticipantForm(true)}
+            onAddClick={() => {
+              setEditingParticipant(null);
+              setShowParticipantForm(true);
+            }}
             onDeleteParticipant={handleDeleteParticipant}
+            onEditParticipant={(p) => {
+              setEditingParticipant(p);
+              setShowParticipantForm(true);
+            }}
           />
         )}
       </main>
@@ -326,11 +340,15 @@ export default function App() {
         />
       )}
 
-      {/* MODAL: REGISTRAR PARTICIPANTE */}
+      {/* MODAL: REGISTRAR / EDITAR PARTICIPANTE */}
       {showParticipantForm && (
         <ParticipantForm
+          participant={editingParticipant}
           onSave={handleSaveParticipant}
-          onClose={() => setShowParticipantForm(false)}
+          onClose={() => {
+            setShowParticipantForm(false);
+            setEditingParticipant(null);
+          }}
         />
       )}
 

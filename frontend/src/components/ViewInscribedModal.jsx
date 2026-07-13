@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { X, UserMinus, Trash2, CalendarDays, Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, UserMinus, Users } from "lucide-react";
 import { api } from "../services/api";
 
 export default function ViewInscribedModal({ event, onClose, onCancelInscription }) {

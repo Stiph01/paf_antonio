@@ -1,4 +1,3 @@
-import React from "react";
 import { CalendarRange, Users, Award } from "lucide-react";
 
 export default function Stats({ totalEvents, totalParticipants, totalInscriptions }) {

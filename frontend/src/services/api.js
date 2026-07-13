@@ -77,6 +77,15 @@ export const api = {
     return handleResponse(response);
   },
 
+  updateParticipant: async (id, participantData) => {
+    const response = await fetch(`${API_BASE_URL}/participantes/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(participantData),
+    });
+    return handleResponse(response);
+  },
+
   deleteParticipant: async (id) => {
     const response = await fetch(`${API_BASE_URL}/participantes/${id}`, {
       method: "DELETE",

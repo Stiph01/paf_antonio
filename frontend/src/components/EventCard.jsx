@@ -1,5 +1,4 @@
-import React from "react";
-import { Calendar, Clock, MapPin, User, Eye, UserPlus, Edit, Trash2 } from "lucide-react";
+import { Calendar, Clock, MapPin, Eye, UserPlus, Edit, Trash2 } from "lucide-react";
 
 export default function EventCard({ event, onEdit, onDelete, onInscribe, onViewInscribed }) {
   const percent = Math.min(Math.round((event.inscritos / event.capacidad) * 100), 100);
