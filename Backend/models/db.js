@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "taskflow_db",
+  database: "gestion_eventos_db",
 });
 
 connection.connect((err) => {
